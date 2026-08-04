@@ -1,1 +1,5 @@
-Free-Object-Hub/.github is a special repository: this README.md will appear on your public organization profile, visible to anyone.
+TODO: разжевать философию проекта
+
+Возможно организовать редми организации на английском
+
+TODO: обновить репозитории на дев машине и на сервере
