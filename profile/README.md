@@ -38,4 +38,4 @@ Object hub - платформа для Object Show Community, с упором н
 ## Контакты
 - Discord: @miobomb
 - Telegram: @MIOBOMB
-- Техподдержка Object Hub (скоро починим!)
+- Техподдержка Object Hub
