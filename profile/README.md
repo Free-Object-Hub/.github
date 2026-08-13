@@ -1,101 +1,114 @@
 # Object Hub
-Object hub - платформа для Object Show Community, с упором на собственный вики движок и СМИ. Мы намеренно отказались от популярных веб стандартов в пользу производительности сайта - в теории Интерфейс клиента Object hub работает в стабильные 60 фпс даже на слабых Chromebook'ах (потому что весь движок был написан на Athlon 64 X2)  
-Мы не команда в классическом смысле - это в основном я (MIOBOMB) плюс несколько друзей, которые время от времени помогают с конкретными кусками (спасибо DenisC за поиск, newHelper langs и помощь в изучении основ JavaScript/Rust)  
+Object Hub is a platform for the Object Show Community, focused on self-written wiki engine and media. We deliberately abandoned popular web standards in favor of site performance - in theory, Object Hub client interface runs at a stable 60 FPS even on weak Chromebooks (because the entire engine was written on an Athlon 64 X2)  
   
-[Текущий версайт](https://objecthub.xyz/?)  
-[Загрузчик версий](https://objecthub.xyz/loader)  
-
-## Философия
-Весь код который мы можем выложить - выкладываем в public domain. Не MIT, не Apache - именно Public Domain в дань уважения Терри Дэвису, делайте с ним что хотите  
-Если серьёзно, то я (MIOBOMB) настолько уверен в безумной неочевидности, и одновременно практичности своего кода, что меня нисколько не пугает Public Domain  
-Часть инфраструктуры (legacy-php, ojhub-node) не выкладывается - либо из-за утерянных сторонних зависимостей, либо потому что код пока не готов к тому чтобы его показывали людям. Это всего лишь честность про текущее состояние вещей  
-
-## Статус
-Object Hub находится в публичной бете  
-Сайт работает в production, но часть старой инфраструктуры постепенно заменяется  
-При этом клиентская часть Object Hub фактически является собственным движком, это одновременно технический долг и преимущество. С одной стороны собственный стек сложнее поддерживать, с другой он позволяет использовать более узкие и специфичные фичи и оптимизации, недоступные при использовании готовых решений
-
-## Особенности  
-- Собственный движок для клиента  
-- Стабильный протокол API  
-- Встроенный редактор исходного кода  
-- Официальный загрузчик версий  
-- X10 Window System - реализация оконной системы прямо в браузере  
-- Фронтенд без зависимостей (весь стек кроме браузера - реально свой)  
-- Умеренная кодовая база (~20000 строк живого кода на все репозитории, прошлые версии клиента, nodejs и мертвые части php в учёт не идут)  
-- Самый яркий пример неправильного SaaS проекта  
-- Дешёвое обслуживание (текущий сервер object hub обходится в $80 в год)  
-
-## Почему русский язык?
-Движок Object hub исторически создавался ещё когда мне (MIOBOMB) было 15 лет и я почти не понимал английский, причины по которым комментарии в коде и документации все ещё пишутся на русском:
-- Исторический пласт (всё везде итак на русском)  
-- Я все ещё не силён в английском  
-- Сохранение относительно единого стиля везде  
-
-## Репозитории
-- **ojhub-openGo** - бекенд на Go, заменил nodejs в продакшне
-- **ojhub-openRust** - горячая замена части openGo (og-теги, загрузчик, веб-пуши) на Rust
-- **ojhub-cli** (на базе GDPS Helper Engine) - клиентский движок, все версии в одном репозитории
-
-## Принципы разработки
-- Портируемость превыше всего - должно работать хоть на FreeBSD, хоть на Termux на ксяоми за 25 тыщ тенге
-- Минимальные зависимости - если можно написать самим без 40 npm-пакетов, пишем сами
-- Производительность важнее модности - клиент должен тянуть 60 фпс даже на Athlon 64 X2
-- Честность - если решение странное, мы пишем почему, а не делаем вид что так и задумано
-- Поддерживаемость - GHE (GDPS Helper Engine) ужасен и страшен, но он ещё работает и отлично выполняет свою задачу
-
-## Архитектура
-- TODO: заполнить до конца
-
-### Клиент
-Object Hub клиент можно описать одной фразой - "вы что, повторили Windows NT?". Для начала короткая историческая справка,  
-Обновление GDPS Helper 1.7\* должно было стать революционным - истинное SPA почти без перезагрузок (по итогу совсем без перезагрузок), быстрая работа даже на слабых устройствах (несмотря на неоптимальную модель работы с DOM).  
-К моменту закрытия GDPS Helper, у меня уже был исходный код самописного SPA, которое пережило проб и было стабилизировано, его я и назвал GDPS Helper Engine.  
-Архитектура у GHE на самом деле крайне примитивная, её идеи вы можете найти на документации к клиенту на Object Hub Wiki, но здесь я распишу их подробнее:  
-- Есть страницы, они всегда сами задают страницу (_.link.set) возвращают html (но иногда монтируют себя сами), этот html проходит через inner\* функции и монтируется куда нужно  
-- - Самомонтируемые страницы существуют, потому что они дёргают API, а значит никакого явного return html сделать просто не выйдет потому что они так или иначе создают Promise  
-- - FIXME: может в эти страницы стоит передавать mount функцию?  
-- Роутер просто выполняет словать из маршрутов вызывая нужную функцию (например ?find - просто выполнит функцию страницы поиска)  
-- Есть рендеры карточек (render\*, реже Render\* - например RenderNews), они всегда и без исключений возвращают обычный html котоырй потом монтируется вызываемым кодом куда нужно (например комментарии в div с ними же)  
-- Состояния исключительно глобальные (кроме X10 - они событийно ориентированные), тот же thisUser доступен для чтения и записи везде  
-- TODO: вспомнить какие ещё виды страниц и неявных состояний у меня существуют  
+We are not a team in the classic sense - it is mostly me (MIOBOMB) plus several friends who occasionally help with specific parts (thanks to DenisC for search, newHelper langs and help with learning the basics of JavaScript/Rust and Sharee for most of the design)  
   
-А теперь то, что портит эту примитивность - гигантский слой совместимости в коде GHE, вплоть до того что вы все ещё можете найти прослойки для портирования localStorage данных GDPS Helper 1.7 в современный диалект  
-\* - обновление разрабатывалось с сентября по ноябрь 2023
-
-### Вики движок
-Наш вики движок - абсурдно уникальный, он содержит в себе истинное CSR ядро без всяких условностей - нет гидрадации, есть только реальный JSON с сервера, и есть только реальные wikiText/Markdown парсеры на клиенте  
-Пусть наш движок пока довольно скуден на функционал, но он уже содержит одну из самых важных на данный момент вещей - JIT-Шаблоны (на самом деле это кешируемый `new Function()` с серверной санитизацией)  
-Ещё одна интересная фича нашего движка - оконность, вы можете открыть редактор статьи в окне, или на конкретно взятой статье вынести раздел в окно и уйти с вики вообще  
-
-### Протокол
-Если вы спросите меня "что самое мерзкое есть в Object Hub?" я дам простой ответ - бекенд протокол. Он почти целиком достался от GDPS Helper, а как вы помните я создавал его в 15 лет на Athlon 64 X2 не зная никаких стандартов.  
-Что здесь собственно мерзкое? Необходимость поддержки, для понимания насколько глубока поддержка - технически путём костылей и полифиллов можно взять клиент GDPS Helper 1.9 и заставить его работать с современным Object Hub API.  
-Сам протокол нигде и никогда не использует Content-Type (а если и использует вините в этом Claude и ChatGPT, Deepseek этим не гадил) или нормальные коды ответов - строго 200, и нестрого разный мусор в Content-Type, единственное что тут нормальное - это почти полноценное JSON API без попыток построить бинарный протокол или RobTop strings.  
-
-### Как идут запросы
-Мир  
+[Current website](https://objecthub.xyz/?)  
+[Version loader](https://objecthub.xyz/loader)  
+  
+## Philosophy  
+All code that we can publish - we publish in the public domain. Not MIT, not Apache - specifically Public Domain, as a tribute to Terry Davis, do whatever you want with it  
+  
+Seriously though, I (MIOBOMB) am so confident in the insane non-obviousness and at the same time practicality of my code that Public Domain does not scare me at all  
+  
+Some parts of the infrastructure (legacy-php, ojhub-node) are not published because some third-party dependencies have been lost, or because the code is not ready to be shown to people yet. This is just honesty about the current state of things  
+  
+## Status  
+  
+Object Hub is in public beta  
+  
+The site is running in production, but some of the old infrastructure is gradually being replaced  
+  
+At the same time, the client side of Object Hub is basically its own engine, this is both technical debt and an advantage. On one hand, having your own stack is harder to maintain, on the other hand it allows us to use more narrow and specific features and optimizations that are not available when using ready-made solutions  
+  
+## Features  
+- Own client engine  
+- Stable API protocol  
+- Built-in source code editor  
+- Official version loader  
+- X10 Window System - implementation of a window system directly in the browser  
+- Frontend without dependencies (the entire stack except the browser is actually our own)  
+- Moderate codebase (~20,000 lines of live code across all repositories, previous client versions, Node.js and dead parts of PHP are not counted)  
+- The most obvious example of a wrong SaaS project  
+- Cheap maintenance (the current Object Hub server costs $80 per year)  
+  
+## Why Russian?  
+The Object Hub engine was historically created when I (MIOBOMB) was 15 years old and barely understood English. The reasons why comments in the code and documentation are still written in Russian:  
+- Historical layer (everything is already in Russian anyway)  
+- I am still not good at English  
+- Keeping a relatively unified style everywhere  
+  
+## Repositories  
+- **ojhub-openGo** - Go backend, replaced Node.js in production  
+- **ojhub-openRust** - hot replacement of parts of openGo (OG tags, loader, web push) with Rust  
+- **ojhub-cli** (based on GDPS Helper Engine) - client engine, all versions in one repository  
+  
+## Development Principles  
+- Portability above all - it should work on anything from FreeBSD to Termux on a Xiaomi phone that costs $50  
+- Minimal dependencies - if we can write something ourselves instead of using 40 npm packages, we write it ourselves  
+- Performance is more important than being fashionable - the client must maintain 60 FPS even on an Athlon 64 X2  
+- Honesty - if a solution is weird, we explain why instead of pretending that it was intended  
+- Maintainability - GHE (GDPS Helper Engine) is horrible and scary, but it still works and does its job perfectly  
+  
+## Architecture  
+* TODO: finish this completely  
+  
+### Client  
+The Object Hub client can be described in one phrase - "what the hell, did you recreate Windows NT?"  
+First, a short historical background  
+The GDPS Helper 1.7* update was supposed to be revolutionary - a true SPA with almost no reloads (eventually with no reloads at all), fast operation even on weak devices (despite an inefficient way of working with the DOM)  
+By the time GDPS Helper was closed, I already had the source code of a custom SPA that had survived the experiments and was stabilized, and I called it GDPS Helper Engine  
+The architecture of GHE is actually extremely primitive, its basic ideas can be found in the client documentation on the Object Hub Wiki, but here I will describe them in more detail:  
+- There are pages, they always set their own page (`_.link.set`) and return HTML (but sometimes mount themselves), this HTML goes through the `inner*` functions and is mounted where needed  
+- Self-mounting pages exist because they call the API, which means that there is no way to make an explicit `return html` because they create a Promise one way or another  
+- - FIXME: maybe these pages should be given a mount function?  
+- The router simply executes a dictionary of routes, calling the required function (for example `?find` simply executes the search page function)  
+- There are card renderers (`render*`, less often `Render*`, for example `RenderNews`), they always and without exceptions return ordinary HTML which is then mounted by the calling code where needed (for example comments into the `div` containing them)  
+- State is exclusively global (except X10, which is event-oriented), the same `thisUser` is available for reading and writing everywhere  
+- TODO: remember what other types of pages and implicit states I have  
+  
+And now the thing that ruins this simplicity - a gigantic compatibility layer in the GHE code, to the point that you can still find layers for porting localStorage data from GDPS Helper 1.7 into the modern dialect  
+\* - the update was developed from September to November 2023  
+  
+### Wiki Engine  
+Our wiki engine is absurdly unique, it contains a true CSR core without any compromises - there is no hydration, there is only real JSON from the server, and there are only real wikiText/Markdown parsers on the client  
+Even though our engine is still rather poor in features, it already contains one of the most important things at the moment - JIT Templates (actually a cacheable `new Function()` with server-side sanitization)  
+Another interesting feature of our engine is windowing, you can open the article editor in a window, or take a specific section of an article into a window and leave the wiki completely  
+  
+### Protocol  
+If you ask me "what is the most disgusting thing in Object Hub?" I will give you a simple answer - the backend protocol  
+It was almost entirely inherited from GDPS Helper, and as you remember I created it when I was 15 years old on an Athlon 64 X2 without knowing any standards  
+What exactly is disgusting here? The need to maintain it  
+To understand how deep this support goes - technically, with hacks and polyfills, you can take the GDPS Helper 1.9 client and make it work with the modern Object Hub API  
+  
+The protocol never uses Content-Type anywhere (and if it does, blame Claude and ChatGPT for that, DeepSeek did not mess with it), or proper response codes - strictly 200, and loosely various garbage in Content-Type  
+The only normal thing here is that it is almost a full JSON API without attempts to build a binary protocol or RobTop strings  
+  
+### How Requests Go  
+World  
 v  
-openRust index+loader отдаёт stable  
+openRust index+loader returns stable  
 v  
-openGo отрабатывает loginT.php, поиск, и пр. и отдаёт ответ вам  
+openGo processes `loginT.php`, search, etc. and returns the response to you  
 v  
-legacy PHP внезапно обрабатывает профили пользователей и почти всю админку  
+legacy PHP suddenly processes user profiles and almost the entire admin panel  
 v  
-Весь этот пирог обязательно идёт в redis (кроме php), и если redis пуст => MariaDB 
-
-### Почему так много бекендов
-Первоначально создавая nodejs я хотел разом выместить весь legacy php, но когда это растянулось на 200+ дней я выкатил nodejs недоделанным и поплатился. Потом я понял - лучше сделать многослойную и страшную, но заметно более дешёвую в моменте архитектуру, чем пытаться разом переписать половину исходного кода.
-
-### История миграций
-- Legacy PHP - первоначальная реализация API
-- Node.js - первая и единственная попытка миграции API
-- openGo - немедленая замена node и портирование обратно на php
-- openRust - сервис для web push, по совместительству ещё и index + loader 1.20, в перспективе станет полноценной реализацией csr-wiki движка на rust
-Все миграции и портирования выполнялись постепенно без остановок сайта (разве что остановки обновлений были).  
-Клиент никогда не мигрировал - он как был на GHE, так на нём и остаётся, и вероятно останется на долгие годы
-
-## Контакты
-- Discord: @miobomb
-- Telegram: @MIOBOMB
-- Техподдержка Object Hub
+The entire stack necessarily goes through Redis (except PHP), and if Redis is empty -> MariaDB  
+  
+### Why So Many Backends  
+Originally, when creating Node.js, I wanted to replace all the legacy PHP at once, but when this took 200+ days I released Node.js unfinished and paid for it  
+Then I realized that it was better to make a layered and scary architecture that is noticeably cheaper at the moment than trying to rewrite half of the original code all at once  
+  
+### Migration History  
+- **Legacy PHP** - original API implementation  
+- **Node.js** - the first and only attempt to migrate the API  
+- **openGo** - immediate replacement for Node.js and porting back to PHP  
+- **openRust** - service for web push, also by coincidence index + loader 1.20, in the future it will become a full implementation of the CSR wiki engine in Rust  
+All migrations and ports were done gradually without stopping the site (except that updates were stopped)  
+  
+The client was never migrated - it was on GHE, and it remains on GHE, and probably will remain there for many years  
+  
+## Contacts  
+- Discord: `@miobomb`  
+- Telegram: `@MIOBOMB`  
+- Object Hub Technical Support  
