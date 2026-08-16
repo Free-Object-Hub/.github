@@ -7,7 +7,7 @@ We are not a team in the classic sense - it is mostly me (MIOBOMB) plus several 
 [Version loader](https://objecthub.xyz/loader)  
   
 ## Philosophy  
-All code that we can publish - we publish in the public domain. Not MIT, not Apache - specifically Public Domain, as a tribute to Terry Davis, do whatever you want with it  
+All code that we can publish - we publish in the public domain, as a tribute to Terry Davis, do whatever you want with it  
   
 Seriously though, I (MIOBOMB) am so confident in the insane non-obviousness and at the same time practicality of my code that Public Domain does not scare me at all  
   
