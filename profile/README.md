@@ -38,6 +38,9 @@ The Object Hub engine was historically created when I (MIOBOMB) was 15 years old
 - I am still not good at English  
 - Keeping a relatively unified style everywhere  
   
+# Git?  
+Historically, I developed GDPS Helper under spartan conditions. Git was added to the project only when it became necessary to deploy nodejs to the server, and Git was added to the client much later. For this reason, many versions were lost in the loader. Legacy PHP still doesn't have a Git repository, and it probably never will.  
+  
 ## Repositories  
 - **ojhub-openGo** - Go backend, replaced Node.js in production  
 - **ojhub-openRust** - hot replacement of parts of openGo (OG tags, loader, web push) with Rust  
