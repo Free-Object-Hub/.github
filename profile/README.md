@@ -73,6 +73,10 @@ The architecture of GHE is actually extremely primitive, its basic ideas can be 
 And now the thing that ruins this simplicity - a gigantic compatibility layer in the GHE code, to the point that you can still find layers for porting localStorage data from GDPS Helper 1.7 into the modern dialect  
 \* - the update was developed from February to May 2024  
   
+### Jails. 
+GDPS Helper Engine Jails is our technology for virtualize GHE App in many DOM Roots over single GHE&App core.
+Jails are closer to iframes in terms of UX, but technically they are contexts elevated to such an absolute that their implementation is astonishing: the mount function extracts a reference to the root DOM element from the jail (context) and inserts the HTML response there. Each jail also has its own virtual router link with an internal history  
+  
 ### Wiki Engine  
 Our wiki engine is absurdly unique, it contains a true CSR core without any compromises - there is no hydration, there is only real JSON from the server, and there are only real wikiText/Markdown parsers on the client  
 Even though our engine is still rather poor in features, it already contains one of the most important things at the moment - JIT Templates (actually a cacheable `new Function()` with server-side sanitization)  
