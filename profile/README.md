@@ -71,7 +71,7 @@ The architecture of GHE is actually extremely primitive, its basic ideas can be 
 - TODO: remember what other types of pages and implicit states I have  
   
 And now the thing that ruins this simplicity - a gigantic compatibility layer in the GHE code, to the point that you can still find layers for porting localStorage data from GDPS Helper 1.7 into the modern dialect  
-\* - the update was developed from September to November 2024  
+\* - the update was developed from February to May 2024  
   
 ### Wiki Engine  
 Our wiki engine is absurdly unique, it contains a true CSR core without any compromises - there is no hydration, there is only real JSON from the server, and there are only real wikiText/Markdown parsers on the client  
@@ -93,8 +93,6 @@ v
 openRust index+loader returns stable  
 v  
 openGo processes `loginT.php`, search, etc. and returns the response to you  
-v  
-legacy PHP suddenly processes user profiles and almost the entire admin panel  
 v  
 The entire stack necessarily goes through Redis (except PHP), and if Redis is empty -> MariaDB  
   
