@@ -51,9 +51,11 @@ Historically, I developed GDPS Helper on a PC from 2005, without an IDE, using a
 - Honesty - if a solution is weird, we explain why instead of pretending that it was intended  
 - Maintainability?.. GHE (GDPS Helper Engine) is horrible and scary, but it still works and does its job perfectly  
   
-## Architecture  
+# Architecture  
   
-### Client  
+Historically, GDPS Helper consisted of two separate monoliths: client and PHP server. Object Hub adopted this tradition and took it to the extreme (GHE-based client + openGo/openRust backends)  
+  
+## Client  
 The Object Hub client can be described in one phrase - "what the hell, did you recreate Windows NT?"  
 A short historical background:   
 The GDPS Helper 1.7* update was supposed to be revolutionary - a true SPA with almost no reloads (eventually with no reloads at all), fast operation even on weak devices (despite an inefficient way of working with the DOM)  
@@ -79,7 +81,7 @@ Our wiki engine doesn't follow what a wiki engine is supposed to look like, it c
 Even though our engine is still rather poor in features, it already contains one of the most important things at the moment - JIT Templates (actually a cacheable `new Function()` with server-side sanitization)  
 Another interesting feature of our engine is windowing, you can open the article editor in a window, or take a specific section of an article into a window and leave the wiki completely  
   
-## Backend Protocol  
+## Server  
 If you ask me "what is the most disgusting thing in Object Hub?" I will give you a simple answer - the backend protocol  
 It was almost entirely inherited from GDPS Helper, and as you remember I created it when I was 15 years old on an Athlon 64 X2 without knowing any standards  
 What exactly is disgusting here? The need to maintain it  
