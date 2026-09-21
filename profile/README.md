@@ -9,7 +9,7 @@ We are not a team in the classic sense - it is mostly me (MIOBOMB) plus several 
 ## In numbers  
 - ~20 000 lines of live code across all repositories  
 - Server costs $80/year  
-- Stable 75 FPS on hardware from 2006 (Athlon 64 X2 3600+, GeForce 8600GT, Windows 10 + Latest Firefox)  
+- Stable 75 FPS on hardware from 2006 (Athlon 64 X2 3600+, GeForce 8600GT, 75hz 5:4 display, Windows 10 + latest Firefox)  
   
 ## Philosophy  
 All code that we can publish - we publish in the public domain, as a tribute to Terry Davis, do whatever you want with it  
