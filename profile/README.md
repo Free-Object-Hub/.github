@@ -41,7 +41,7 @@ Historically, I developed GDPS Helper on a PC from 2005, without an IDE, using a
 - **ojhub-gdps-helper-php** - Original, powered-off, backend for object hub, originally forked from GDPS Helper 1.8
 - **ojhub-node** - failed attempt to migrate to Fastify.js  
 - **ojhub-openGo** - Go backend, replaced Node.js in production  
-- **ojhub-openRust** - full openGo port on Rust, not prod-ready  
+- **ojhub-openRust** - experimental Rust rewrite of openGo, currently shelved and not used in production  
 - **ojhub-cli** (based on GDPS Helper Engine) - client engine, all versions in one repository  
   
 ## Development Principles  
