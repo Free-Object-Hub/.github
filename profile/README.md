@@ -53,7 +53,7 @@ Historically, I developed GDPS Helper on a PC from 2005, without an IDE, using a
   
 # Architecture  
   
-Historically, GDPS Helper consisted of two separate monoliths: client and PHP server. Object Hub adopted this tradition and took it to the extreme (GHE-based client + openGo/openRust backends)  
+Historically, GDPS Helper consisted of two separate monoliths: client and PHP server. Object Hub adopted this tradition and took it to the extreme (GHE-based client + openGo backend)  
   
 ## Client  
 The Object Hub client can be described in one phrase - "what the hell, did you recreate Windows NT?"  
