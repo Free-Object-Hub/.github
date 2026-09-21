@@ -41,7 +41,7 @@ Historically, I developed GDPS Helper on a PC from 2005, without an IDE, using a
 - **ojhub-gdps-helper-php** - Original, powered-off, backend for object hub, originally forked from GDPS Helper 1.8
 - **ojhub-node** - failed attempt to migrate to Fastify.js  
 - **ojhub-openGo** - Go backend, replaced Node.js in production  
-- **ojhub-openRust** - hot replacement of parts of openGo (OG tags, loader, web push) with Rust  
+- **ojhub-openRust** - full openGo port on Rust, not prod-ready  
 - **ojhub-cli** (based on GDPS Helper Engine) - client engine, all versions in one repository  
   
 ## Development Principles  
@@ -93,9 +93,7 @@ The only normal thing here is that it is almost a full JSON API without attempts
 ### How Requests Go  
 Client  
 v  
-openRust (index+OG, loader, register && login)  
-v  
-openGo (`loginT.php`, search, etc.)  
+openGo (standalone)  
 v  
 Redis* (cache) → MariaDB (persistence)  
   
@@ -108,8 +106,8 @@ Then I realized that it was better to make a layered and scary architecture that
 ### Migration History  
 - **Legacy PHP** - original API implementation. Shut down  
 - **Node.js** - the first and only attempt to migrate the API. Broke the protocol. Shut down  
-- **openGo** - immediate replacement for Node.js, restores the protocol behavior of legacy PHP, serves 97% of the API  
-- **openRust** - service for web push, also by coincidence index + loader 1.20, serves 3%, in the future it will become a full implementation of the CSR wiki engine in Rust  
+- **openGo** - immediate replacement for Node.js, restores the protocol behavior of legacy PHP, serves 100% of the API  
+- **openRust** - service for web push, also by coincidence index + loader 1.20, can serve 3% of the API, postponed for the time being  
 All migrations and ports were done gradually without stopping the site (except that client updates were frozen)  
   
 The client was never migrated - it was on GHE, and it remains on GHE, and probably will remain there for many years  
