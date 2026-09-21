@@ -1,5 +1,5 @@
 # Object Hub
-Object Hub is a platform for the Object Show Community, focused on custom wiki engine and media. We deliberately avoid popular web standards in favor of site performance - in theory, Object Hub client interface runs at a stable 60 FPS even on weak Chromebooks (because the entire engine was written on an Athlon 64 X2)  
+Object Hub is a platform for the Object Show Community, focused on custom wiki engine and media. We deliberately avoid popular web standards in favor of site performance - Object Hub client interface runs at a stable 60 FPS even on weak Chromebooks (because the entire engine was written on an Athlon 64 X2)  
   
 We are not a team in the classic sense - it is mostly me (MIOBOMB) plus several friends who occasionally help with specific parts (thanks to DenisC for search, newHelper langs, help with learning the basics of JavaScript/Rust and Sharee for most of the design)  
   
@@ -9,7 +9,7 @@ We are not a team in the classic sense - it is mostly me (MIOBOMB) plus several 
 ## In numbers  
 - ~20 000 lines of live code across all repositories  
 - Server costs $80/year  
-- Stable 60 FPS on hardware from 2006  
+- Stable 75 FPS on hardware from 2006 (Athlon 64 X2 3600+, GeForce 8600GT, Windows 10 + Latest Firefox)  
   
 ## Philosophy  
 All code that we can publish - we publish in the public domain, as a tribute to Terry Davis, do whatever you want with it  
@@ -102,12 +102,14 @@ Redis* (cache) → MariaDB (persistence)
 ### Why So Many Backends  
 Originally, when creating Node.js, I wanted to replace all the legacy PHP at once, but when this took 200+ days I released Node.js unfinished and paid for it  
 Then I realized that it was better to make a layered and scary architecture that is noticeably cheaper at the moment than trying to rewrite half of the original code all at once  
+09/21/2026:
+Now only openGo is running; openRust and Legacy PHP have been stopped, and Node.js even more so
   
 ### Migration History  
 - **Legacy PHP** - original API implementation. Shut down  
 - **Node.js** - the first and only attempt to migrate the API. Broke the protocol. Shut down  
 - **openGo** - immediate replacement for Node.js, restores the protocol behavior of legacy PHP, serves 100% of the API  
-- **openRust** - service for web push, also by coincidence index + loader 1.20, can serve 3% of the API, postponed for the time being  
+- **openRust** - service for web push, also by coincidence index + loader 1.20 + ALTCHA and login/register, can serve 3% of the API, postponed for the time being  
 All migrations and ports were done gradually without stopping the site (except that client updates were frozen)  
   
 The client was never migrated - it was on GHE, and it remains on GHE, and probably will remain there for many years  
