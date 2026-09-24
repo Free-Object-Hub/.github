@@ -11,7 +11,7 @@ We are not a team in the classic sense - it is mostly me (MIOBOMB) plus several 
 - Server costs $80/year  
 - Stable 75 FPS on mid-2000s hardware (Athlon 64 X2 3600+, GeForce 8600GT, 75hz 5:4 display, Windows 10 + latest Firefox)  
 - ~1 API request per action (site navigation, search/profile actions)  
-- 900 bytes - 4500 Kbytes per API request  
+- 900 bytes - 4500 bytes per API request  
   
 ## Philosophy  
 All code that we can publish - we publish in the public domain, as a tribute to Terry Davis, do whatever you want with it  
