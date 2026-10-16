@@ -35,6 +35,7 @@ The Object Hub engine was historically created when I (MIOBOMB) was 15 years old
 - Historical layer (everything is already in Russian anyway)  
 - I am still not good at English  
 - Keeping a relatively unified style everywhere  
+- No, I am translating everything to English, but gradually  
   
 # Git?  
 Historically, I developed GDPS Helper on a PC from 2005, without an IDE, using a custom-built PHP file manager where files were edited through a plain `<textarea>`. Git was added to the project only when it became necessary to deploy nodejs to the server, and Git was added to the client much later. For this reason, many versions were lost in the loader. Legacy PHP still doesn't have a Git repository, and it probably never will.  
@@ -45,6 +46,7 @@ Historically, I developed GDPS Helper on a PC from 2005, without an IDE, using a
 - **ojhub-openGo** - Go backend, replaced Node.js in production  
 - **ojhub-openRust** - experimental Rust rewrite of openGo, currently shelved and not used in production  
 - **ojhub-cli** (based on GDPS Helper Engine) - client engine, all versions in one repository  
+- **ojhub-qt** - Native client on Qt5, compatible with Windows XP. Currently the repository is private  
   
 ## Development Principles  
 - Portability above all - it should work on anything from FreeBSD to Termux on a Xiaomi phone that costs $50  
@@ -119,4 +121,4 @@ The client was never migrated - it was on GHE, and it remains on GHE, and probab
 ## Contacts  
 - Discord: `@miobomb`  
 - Telegram: `@MIOBOMB`  
-- Object Hub Technical Support  
+- Object Hub Technical Support
