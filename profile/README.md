@@ -46,7 +46,7 @@ Historically, I developed GDPS Helper on a PC from 2005, without an IDE, using a
 - **ojhub-openGo** - Go backend, replaced Node.js in production  
 - **ojhub-openRust** - experimental Rust rewrite of openGo, currently shelved and not used in production  
 - **ojhub-cli** (based on GDPS Helper Engine) - client engine, all versions in one repository  
-- **ojhub-qt** - Native client on Qt5, compatible with Windows XP. Currently the repository is private  
+- **ojhub-qt** - Native client on Qt5, may compatible with Windows XP, working on FreeBSD  
   
 ## Development Principles  
 - Portability above all - it should work on anything from FreeBSD to Termux on a Xiaomi phone that costs $50  
