@@ -35,7 +35,7 @@ The Object Hub engine was historically created when I (MIOBOMB) was 15 years old
 - Historical layer (everything is already in Russian anyway)  
 - I am still not good at English  
 - Keeping a relatively unified style everywhere  
-- No, I am translating everything to English, but gradually  
+- No, I am translating every live code to English, but gradually  
   
 # Git?  
 Historically, I developed GDPS Helper on a PC from 2005, without an IDE, using a custom-built PHP file manager where files were edited through a plain `<textarea>`. Git was added to the project only when it became necessary to deploy nodejs to the server, and Git was added to the client much later. For this reason, many versions were lost in the loader. Legacy PHP still doesn't have a Git repository, and it probably never will.  
