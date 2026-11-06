@@ -109,6 +109,9 @@ Now only openGo is running; openRust and Legacy PHP have been stopped, and Node.
 All migrations and ports were done gradually without stopping the site (except that client updates were frozen)  
   
 The client was never migrated - it was on GHE, and it remains on GHE, and probably will remain there for many years  
+
+# Future?
+TODO: Write here all about Object Hub polls, ojhub-android (pure Java + Android Views with GHE-like codestyle), MediaWiki-compat layer(?), creating custom HTTP revision for MIOBOMB's protocol (remove all unnecessary headers + `Content-type: 0`)  
   
 ## Contacts  
 - Discord: `@miobomb`  
