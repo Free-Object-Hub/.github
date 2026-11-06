@@ -7,7 +7,7 @@ We are not a team in the classic sense - it is mostly me (MIOBOMB) plus several 
 [Version loader](https://objecthub.xyz/loader)  
   
 ## In numbers  
-- ~20 000 lines of live code across all repositories  
+- ~22 000 lines of live code across all repositories  
 - Server costs $80/year  
 - Stable 75 FPS on mid-2000s hardware (Athlon 64 X2 3600+, GeForce 8600GT, 75hz 5:4 display, Windows 10 + latest Firefox)  
 - ~1 API request per action (site navigation, search/profile actions)  
@@ -51,7 +51,7 @@ Historically, I developed GDPS Helper on a PC from 2005, without an IDE, using a
   
 Historically, GDPS Helper consisted of two separate monoliths: client and PHP server. Object Hub adopted this tradition and took it to the extreme (GHE-based client + openGo backend)  
   
-## Client  
+## Web Client  
 The Object Hub client can be described in one phrase - "what the hell, did you recreate Windows NT?"  
 A short historical background:   
 The GDPS Helper 1.7* update was supposed to be revolutionary - a true SPA with almost no reloads (eventually with no reloads at all), fast operation even on weak devices (despite an inefficient way of working with the DOM)  
@@ -65,6 +65,10 @@ The architecture of GHE is actually extremely primitive, its basic ideas can be 
   
 And now the thing that ruins this simplicity - a gigantic compatibility layer in the openGo and web client code, to the point that you can still find layers for porting localStorage data from GDPS Helper 1.7 into the modern dialect  
 \* - the update was developed from February to May 2024  
+
+### X10 Window System
+TODO: Check my english quality.  
+Honestly, newHelper X10 is just small custom event-bus (~105 LOC) for creating window managers by using it. Right now the largest achievement of X10 is newHelper win, strange DOM-WM that competes with WinBox.js in portability and UX, i dont know what i should to say here, you can just read source code in latest GHE version (newHelper.js => x10 & win modules, ~350 LOC)  
   
 ### Jails  
 GDPS Helper Engine Jails is our technology for virtualizing GHE App in many DOM Roots over single App core  
