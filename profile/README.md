@@ -140,6 +140,9 @@ Plans change, so every item has a status. **Next** means it is in active develop
 - Rolling GHE back to ES3 with a tiny custom Promise polyfill (`then` method only)  
 - `ojhub-powerC` - a C project with a controlled dependency stack where every library is understood  
 - `ojhub-holyC` - real Object Hub backend written on HolyC or ZealC on a TempleOS fork with TCP/IP and VirtIO support (or one we write ourselves). Yes, MIOBOMB are serious. Mostly  
+- Object Hub Protocol 134
+- - Remove some died compat elements (like `user.resume` in `/content/getUser.php`)
+- - Backport some elements from objects to arrays (GDPSes, vacancies, user profiles, wikis, etc.) by using as reference GDPS Helper 1.901  
   
 ## Not planned
 - Ads  
