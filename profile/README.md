@@ -1,5 +1,5 @@
 # Object Hub
-Object Hub is a platform for the Object Show Community, focused on custom wiki engine and media. We deliberately avoid popular web standards in favor of site performance - Object Hub client interface runs at a stable 60 FPS even on weak Chromebooks (because the entire engine was written on an Athlon 64 X2)  
+Object Hub is a platform for the Object Show Community, focused on custom wiki engine and media. We deliberately avoid popular web standards in favor of site performance - Object Hub web client runs at a stable 60 FPS even on weak Chromebooks (because the entire engine was written on an Athlon 64 X2)  
   
 We are not a team in the classic sense - it is mostly me (MIOBOMB) plus several friends who occasionally help with specific parts (thanks to DenisC for search, newHelper langs, help with learning the basics of JavaScript/Rust and Sharee for most of the design)  
   
@@ -16,7 +16,6 @@ We are not a team in the classic sense - it is mostly me (MIOBOMB) plus several 
 ## Philosophy  
 All code that we can publish - we publish in the public domain, as a tribute to Terry Davis, do whatever you want with it  
 Seriously though, I (MIOBOMB) am so confident in the insane non-obviousness and at the same time practicality of my code that Public Domain does not scare me at all  
-Some parts of the infrastructure (legacy-php) are not published because some third-party dependencies have been lost, or because the code is not ready to be shown to people yet. This is just honesty about the current state of things  
   
 ## Status  
 Object Hub is in public beta  
@@ -30,22 +29,15 @@ At the same time, the client side of Object Hub is basically its own engine, thi
 - Built-in source code editor  
 - Official version loader  
   
-## Why Russian?  
-The Object Hub engine was historically created when I (MIOBOMB) was 15 years old and barely understood English. The reasons why comments in the code and documentation are still written in Russian:  
-- Historical layer (everything is already in Russian anyway)  
-- I am still not good at English  
-- Keeping a relatively unified style everywhere  
-- No, I am translating every live code to English, but gradually  
-  
 # Git?  
-Historically, I developed GDPS Helper on a PC from 2005, without an IDE, using a custom-built PHP file manager where files were edited through a plain `<textarea>`. Git was added to the project only when it became necessary to deploy nodejs to the server, and Git was added to the client much later. For this reason, many versions were lost in the loader. Legacy PHP still doesn't have a Git repository, and it probably never will.  
+Historically, I developed GDPS Helper on a PC from 2005, without an IDE, using a custom-built PHP file manager where files were edited through a plain `<textarea>`. Git was added to the project only when it became necessary to deploy nodejs to the server, and Git was added to the client much later. For this reason, many versions were lost in the loader.  
   
 ## Repositories  
 - **ojhub-gdps-helper-php** - Original, powered-off, backend for object hub, originally forked from GDPS Helper 1.8
 - **ojhub-node** - failed attempt to migrate to Fastify.js  
 - **ojhub-openGo** - Go backend, replaced Node.js in production  
 - **ojhub-openRust** - experimental Rust rewrite of openGo, currently shelved and not used in production  
-- **ojhub-cli** (based on GDPS Helper Engine) - client engine, all versions in one repository  
+- **ojhub-cli** (based on GDPS Helper Engine) - web client, all versions in one repository  
 - **ojhub-qt** - Native client on Qt5, may compatible with Windows XP, working on FreeBSD  
   
 ## Development Principles  
@@ -53,7 +45,7 @@ Historically, I developed GDPS Helper on a PC from 2005, without an IDE, using a
 - Minimal dependencies - if we can write something ourselves instead of using 40 npm packages, we write it ourselves  
 - Performance is more important than being fashionable - the client must maintain 60 FPS even on an Athlon 64 X2  
 - Honesty - if a solution is weird, we explain why instead of pretending that it was intended  
-- Maintainability?.. GHE (GDPS Helper Engine) is horrible and scary, but it still works and does its job perfectly  
+- Maintainability?.. Object Hub web client is horrible and scary, but it still works and does its job perfectly  
   
 # Architecture  
   
@@ -71,14 +63,14 @@ The architecture of GHE is actually extremely primitive, its basic ideas can be 
 - There are card renderers (`render*`, less often `Render*`, for example `RenderNews`), they always and without exceptions return ordinary HTML which is then mounted by the calling code where needed (for example comments into the `div` containing them)  
 - State is exclusively global (except X10, which is event-oriented), the same `thisUser` is available for reading and writing everywhere  
   
-And now the thing that ruins this simplicity - a gigantic compatibility layer in the GHE code, to the point that you can still find layers for porting localStorage data from GDPS Helper 1.7 into the modern dialect  
+And now the thing that ruins this simplicity - a gigantic compatibility layer in the openGo and web client code, to the point that you can still find layers for porting localStorage data from GDPS Helper 1.7 into the modern dialect  
 \* - the update was developed from February to May 2024  
   
 ### Jails  
 GDPS Helper Engine Jails is our technology for virtualizing GHE App in many DOM Roots over single App core  
-Jails are closer to iframes in terms of UX, but technically they are contexts elevated to such an absolute that their implementation is very simple: the mount function extracts a reference to the root DOM element from the jail (context) and inserts the HTML response there. Each jail also has its own virtual router link with an internal history  
+Jails are closer to iframes in terms of UX, but technically they are contexts elevated to such an absolute that their implementation is very simple: the mount function (like `innerMain`) extracts a reference to the root DOM element from the jail (context) and inserts the HTML response there. Each jail also has its own virtual router link with an internal history  
 Jails only virtualize states, global variables (like thisUser) are not virtualized because it doesn't make sense  
-`J` is the jail dispatcher. Every function that touches router, link, or DOM takes a jail id and goes through `J` — the root jail is not special. The global `_` router still exists, but it's only used inside the root jail now  
+`J` is the jail dispatcher. Every function that touches router, link, or DOM takes a jail id and goes through `J` - the root jail is not special. The global `_` router still exists, but it's only used inside the root jail now  
   
 ### Wiki Engine  
 Our wiki engine doesn't follow what a wiki engine is supposed to look like, it contains a true CSR core without any compromises - no hydration - only real JSON from the server, only real wikiText/Markdown parsers on the client
@@ -101,9 +93,9 @@ openGo (standalone)
 v  
 Redis* (cache) → MariaDB (persistence)  
   
-* - legacy PHP hits MariaDB directly
+\* - legacy PHP hits MariaDB directly
   
-### Why So Many Backends  
+### Why So Many Historic Backends  
 Originally, when creating Node.js, I wanted to replace all the legacy PHP at once, but when this took 200+ days I released Node.js unfinished and paid for it  
 Then I realized that it was better to make a layered and scary architecture that is noticeably cheaper at the moment than trying to rewrite half of the original code all at once  
 09/21/2026:
