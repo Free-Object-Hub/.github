@@ -66,9 +66,13 @@ The architecture of GHE is actually extremely primitive, its basic ideas can be 
 And now the thing that ruins this simplicity - a gigantic compatibility layer in the openGo and web client code, to the point that you can still find layers for porting localStorage data from GDPS Helper 1.7 into the modern dialect  
 \* - the update was developed from February to May 2024  
 
-### X10 Window System
-TODO: Check my english quality.  
-Honestly, newHelper X10 is just small custom event-bus (~105 LOC) for creating window managers by using it. Right now the largest achievement of X10 is newHelper win, strange DOM-WM that competes with WinBox.js in portability and UX, i dont know what i should to say here, you can just read source code in latest GHE version (newHelper.js => x10 & win modules, ~350 LOC)  
+### X10 window system
+The window system is split into two layers, like X.org and a window manager on Unix  
+  
+- **X10** is the window server (105 lines with comments). It only keeps a registry of windows (`_.wins`), their states, and announces changes as `xws:*` events on `document`. It never touches the DOM  
+- **win** is the built-in window manager (338 lines with comments). It owns everything visual: DOM, drag, fullscreen, taskbar, titles, window snapshots  
+  
+Because X10 does not own the DOM, several window managers can live in one session. `toast` is already one: a tiny manager that creates its own windows for notifications. GHE Jails mount into `win` windows, which is how an article section or a profile can leave the page and stay open  
   
 ### Jails  
 GDPS Helper Engine Jails is our technology for virtualizing GHE App in many DOM Roots over single App core  
@@ -114,8 +118,34 @@ All migrations and ports were done gradually without stopping the site (except t
   
 The client was never migrated - it was on GHE, and it remains on GHE, and probably will remain there for many years  
 
-# Future?
-TODO: Write here all about Object Hub polls, ojhub-android (pure Java + Android Views with GHE-like codestyle), MediaWiki-compat layer(?), creating custom HTTP revision for MIOBOMB's protocol (remove all unnecessary headers + `Content-type: 0`)  
+# Future
+Plans change, so every item has a status. **Next** means it is in active development. **Planned** means we want it and know roughly how. **Considering** means it is an idea, and may never happen  
+  
+## Next (0.99 branch)  
+- Polls - single and multiple choice, with options to hide results while the poll is open and/or after it closes  
+- News drafts and scheduled publishing  
+- Terms of Use and Privacy Policy (first drafts exist, they are weak)  
+- Self-hosted ALTCHA bundle (no more third-party CDN)  
+  
+## Planned
+- Wiki: revision snapshots, a fuller rights system, MediaWiki-compatible page export and import  
+- Native and mobile clients:  
+- - `ojhub-android` - pure Java + Android Views in GHE-like code style, Android 5.0+  
+- - `ojhub-qt` - may be left to the community, see its README for the current state  
+- A custom HTTP revision for MIOBOMB's protocol: no unnecessary headers, `Content-Type: 0` instead of `Your-Mom`  
+  
+## Considering
+- `ojhub-android` for Android 4.x as a separate compatibility layer (forcing TLS 1.2), only after the 5.0+ version works  
+- GHE 3.X: a build pipeline that turns hundreds of source files into a few small bundles, with the file order declared manually by the developer (no magic, compatible with newHelper lazy)  
+- Rolling GHE back to ES3 with a tiny custom Promise polyfill (`then` method only)  
+- `ojhub-powerC` - a C project with a controlled dependency stack where every library is understood  
+- `ojhub-holyC` - real Object Hub backend written on HolyC or ZealC on a TempleOS fork with TCP/IP and VirtIO support (or one we write ourselves). Yes, MIOBOMB are serious. Mostly  
+  
+## Not planned
+- Ads  
+- Cookies  
+- Personalized feeds and recommendation algorithms  
+- Server-side rendering of the wiki  
   
 ## Contacts  
 - Discord: `@miobomb`  
