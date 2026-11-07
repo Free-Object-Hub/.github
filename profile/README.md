@@ -123,9 +123,13 @@ Plans change, so every item has a status. **Next** means it is in active develop
   
 ## Next (0.99 branch)  
 - Polls - single and multiple choice, with options to hide results while the poll is open and/or after it closes  
+- - Current stage: Create UI for creating polls  
 - News drafts and scheduled publishing  
+- - Current stage: not started  
 - Terms of Use and Privacy Policy (first drafts exist, they are weak)  
+- - Current stage: not started  
 - Self-hosted ALTCHA bundle (no more third-party CDN)  
+- - Current stage: not started  
   
 ## Planned
 - Wiki: revision snapshots, a fuller rights system, MediaWiki-compatible page export and import  
