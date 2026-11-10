@@ -39,7 +39,7 @@ Historically, I developed GDPS Helper on a PC from 2005, without an IDE, using a
 - **ojhub-openRust** - experimental Rust rewrite of openGo, currently shelved and not used in production  
 - **ojhub-cli** (based on GDPS Helper Engine) - web client, all versions in one repository  
 - **ojhub-qt** - Native client on Qt5, may compatible with Windows XP, working on FreeBSD  
-- **ojhub-qt** - Native android client on Java+Views, current target platform is Android 4.4
+- **ojhub-dalvik** - Native android client on Java+Views, current target platform is Android 4.4  
   
 ## Development Principles  
 - Portability above all - it should work on anything from FreeBSD to Termux on a Xiaomi phone that costs $50  
@@ -127,7 +127,7 @@ Plans change, so every item has a status. **Next** means it is in active develop
 - - Current stage: Create UI for creating polls  
 - News drafts and scheduled publishing  
 - - Current stage: not started  
-- `ojhub-android` - pure Java + Android Views in GHE-like code style, Android 5.0+  
+- `ojhub-dalvik` - pure Java + Android Views in GHE-like code style, target platform is Android 4.1+  
 - - Current stage: Tech preview source code is released  
 - Terms of Use and Privacy Policy (first drafts exist, they are weak)  
 - - Current stage: not started  
