@@ -107,9 +107,13 @@ Redis* (cache) → MariaDB (persistence)
 ### Why So Many Historic Backends  
 Originally, when creating Node.js, I wanted to replace all the legacy PHP at once, but when this took 200+ days I released Node.js unfinished and paid for it  
 Then I realized that it was better to make a layered and scary architecture that is noticeably cheaper at the moment than trying to rewrite half of the original code all at once  
-09/21/2026:
-Now only openGo is running; openRust and Legacy PHP have been stopped, and Node.js even more so
+09/21/2026:  
+Now only openGo is running; openRust and Legacy PHP have been stopped, and Node.js even more so  
   
+### Why no microservices
+I am destitute  
+  
+
 ### Migration History  
 - **Legacy PHP** - original API implementation. Shut down  
 - **Node.js** - the first and only attempt to migrate the API. Broke the protocol. Shut down  
